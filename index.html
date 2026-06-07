@@ -1,0 +1,930 @@
+```html
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece GR - Ο Απόλυτος Οδηγός (The Ultimate Guide)</title>
+    <!-- Google Fonts για Manga & Comic Αισθητική -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Architects+Daughter&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS για γρήγορο, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mangaTitle: ['Bangers', 'cursive'],
+                        mangaHand: ['Architects Daughter', 'cursive'],
+                        sans: ['Comfortaa', 'sans-serif'],
+                    },
+                    colors: {
+                        opGold: '#FFD700',
+                        opDarkBlue: '#0A1128',
+                        opRed: '#E63946',
+                        opTeal: '#457B9D',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome για εικονίδια -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A1128;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFD700;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E63946;
+        }
+
+        /* Manga στυλ πλαίσια και σκιές */
+        .manga-border {
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
+            transition: all 0.2s ease-in-out;
+        }
+        .manga-border:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px #FFD700;
+        }
+
+        /* Background Εφέ */
+        .bg-overlay {
+            background-color: rgba(10, 17, 40, 0.82);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Ομαλή μετάβαση για αλλαγή backgrounds */
+        .bg-transition {
+            transition: background-image 0.8s ease-in-out, background-color 0.8s ease-in-out;
+        }
+
+        /* CSS για custom backgrounds όταν δεν φορτώνουν οι εικόνες */
+        .fallback-pattern {
+            background-color: #0d1b2a;
+            background-image: radial-gradient(#1b263b 20%, transparent 20%),
+                              radial-gradient(#1b263b 20%, transparent 20%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        /* Slide-out Menu Animation */
+        .menu-transition {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="bg-opDarkBlue text-gray-100 font-sans bg-transition fallback-pattern relative min-h-screen flex flex-col overflow-x-hidden" id="main-body" style="background-image: url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1920&q=80'); background-blend-mode: overlay; background-size: cover; background-attachment: fixed;">
+
+    <!-- Overlay για θόλωμα και σκοτάδι (Manga Collage Effect) -->
+    <div class="absolute inset-0 bg-overlay z-0 pointer-events-none"></div>
+
+    <!-- Header / Πλοήγηση (Συμπαγές Μαύρο και Αδιαφανές) -->
+    <header class="relative z-30 border-b-4 border-black bg-black text-white py-4 px-6 sticky top-0 shadow-2xl">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo & Σύνθημα Πειρατών -->
+            <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                <a href="#" onclick="showPage('index')" class="flex items-center gap-3 group">
+                    <span class="font-mangaTitle text-3xl md:text-4xl text-opGold tracking-wider transform group-hover:scale-105 transition-transform duration-200">
+                        ONE PIECE <span class="text-opRed text-xl md:text-2xl">(ワンピース)</span>
+                    </span>
+                </a>
+                <!-- Το Σύνθημα των Πειρατών -->
+                <span class="font-mangaHand text-xs md:text-sm text-opGold/90 bg-white/5 border border-opGold/30 px-3 py-1 rounded-full tracking-wide">
+                    "Τα όνειρα των ανθρώπων δεν πεθαίνουν ποτέ! (People's dreams never die!)"
+                </span>
+            </div>
+
+            <!-- Hamburger Menu Button (3 Μπάρες) -->
+            <button onclick="toggleMenu()" class="p-2 text-opGold hover:text-white transition-colors focus:outline-none" aria-label="Μενού">
+                <i class="fa-solid fa-bars text-3xl md:text-4xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Slide-out Μενού Πλοήγησης (Manga Slide Menu) -->
+    <div id="side-menu" class="fixed inset-y-0 right-0 w-80 bg-black border-l-4 border-opGold z-50 transform translate-x-full menu-transition shadow-2xl flex flex-col justify-between p-6">
+        <div>
+            <!-- Κουμπί Κλεισίματος -->
+            <div class="flex justify-end mb-8">
+                <button onclick="toggleMenu()" class="text-opRed hover:text-white transition-colors text-3xl focus:outline-none">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Λίνκς Μενού -->
+            <nav class="space-y-6 flex flex-col">
+                <div class="border-b border-gray-800 pb-2 mb-2">
+                    <span class="font-mangaHand text-xs text-opGold tracking-widest uppercase">ΠΛΟΗΓΗΣΗ (NAVIGATION)</span>
+                </div>
+                
+                <button onclick="navigate('index')" class="text-left font-mangaTitle text-2xl tracking-wide text-white hover:text-opGold flex items-center gap-3 py-2 border-b border-transparent hover:border-opGold/30 transition-all">
+                    <i class="fa-solid fa-anchor text-opRed"></i> ΑΡΧΙΚΗ (HOME)
+                </button>
+
+                <button onclick="navigate('characters')" class="text-left font-mangaTitle text-2xl tracking-wide text-white hover:text-opGold flex items-center gap-3 py-2 border-b border-transparent hover:border-opGold/30 transition-all">
+                    <i class="fa-solid fa-users text-opGold"></i> ΧΑΡΑΚΤΗΡΕΣ (CHARACTERS)
+                </button>
+
+                <button onclick="navigate('seasons')" class="text-left font-mangaTitle text-2xl tracking-wide text-white hover:text-opGold flex items-center gap-3 py-2 border-b border-transparent hover:border-opGold/30 transition-all">
+                    <i class="fa-solid fa-map text-opGold"></i> ΙΣΤΟΡΙΕΣ & ΝΗΣΙΑ (SAGAS)
+                </button>
+
+                <button onclick="navigate('fillers')" class="text-left font-mangaTitle text-2xl tracking-wide text-white hover:text-opGold flex items-center gap-3 py-2 border-b border-transparent hover:border-opGold/30 transition-all">
+                    <i class="fa-solid fa-scissors text-opRed"></i> FILLERS (SKIP GUIDE)
+                </button>
+
+                <button onclick="navigate('shops')" class="text-left font-mangaTitle text-2xl tracking-wide text-white hover:text-opGold flex items-center gap-3 py-2 border-b border-transparent hover:border-opGold/30 transition-all">
+                    <i class="fa-solid fa-shopping-cart text-opGold"></i> ΑΓΟΡΕΣ (SHOPS GR)
+                </button>
+            </nav>
+        </div>
+
+        <!-- Κάτω Μέρος Μενού με Διακοσμητικό Σύνθημα -->
+        <div class="border-t border-gray-800 pt-6">
+            <p class="font-mangaHand text-xs text-gray-400 leading-relaxed text-center">
+                "Όταν ο κόσμος σε απορρίπτει, εσύ απλά γέλα!" <br>
+                <span class="text-opGold font-bold">— Monkey D. Luffy</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Overlay Σκίασης όταν το μενού είναι ανοιχτό -->
+    <div id="menu-backdrop" onclick="toggleMenu()" class="fixed inset-0 bg-black/75 z-40 hidden transition-opacity duration-300"></div>
+
+    <!-- ΚΥΡΙΟ ΠΕΡΙΕΧΟΜΕΝΟ -->
+    <main class="flex-grow relative z-10 max-w-7xl w-full mx-auto px-4 py-8">
+
+        <!-- ================= PAGE 1: INDEX (ΑΡΧΙΚΗ) ================= -->
+        <section id="page-index" class="page-section space-y-12">
+            
+            <!-- Hero / Εισαγωγή -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-black/70 p-6 md:p-8 rounded-3xl manga-border border-white/25">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-block bg-opRed text-white font-mangaTitle text-lg px-4 py-1 transform -rotate-2">
+                        ΓΙΑ ΜΥΗΜΕΝΟΥΣ & ΑΜΥΗΤΟΥΣ (FOR VETERANS & BEGINNERS)
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-mangaTitle text-opGold tracking-wider leading-none">
+                        ΚΑΛΩΣΗΡΘΑΤΕ ΣΤΟ ΜΕΓΑΛΟ ΤΑΞΙΔΙ!<br>
+                        <span class="text-white text-3xl md:text-5xl">(WELCOME TO THE GRAND LINE)</span>
+                    </h1>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed font-light">
+                        Το <strong>One Piece</strong> δεν είναι απλώς ένα manga ή anime· είναι ένα παγκόσμιο φαινόμενο πολιτισμού. Είτε είστε βετεράνος πειρατής που αναζητά πληροφορίες για τα τελευταία νησιά, είτε ένας «αμύητος» που τώρα ξεκινάει να ανακαλύπτει γιατί όλος ο κόσμος μιλάει για το θησαυρό του <em>Γκόλντ Ντ. Ρότζερ (Gol D. Roger)</em>, αυτό το σάιτ είναι η πυξίδα σας!
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="showPage('characters')" class="bg-opGold text-black font-mangaTitle text-xl px-6 py-3 rounded manga-border border-black hover:bg-white transition-all">
+                            ΔΕΣ ΤΟ ΠΛΗΡΩΜΑ (VIEW CREW)
+                        </button>
+                        <button onclick="showPage('seasons')" class="bg-transparent text-white border border-white hover:bg-white hover:text-black font-mangaTitle text-xl px-6 py-3 rounded transition-all">
+                            ΞΕΚΙΝΑ ΤΗΝ ΙΣΤΟΡΙΑ (START STORY)
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 relative">
+                    <!-- Διακοσμητική Εικόνα με Manga Border -->
+                    <div class="manga-border bg-white p-3 rotate-2 hover:rotate-0 transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80" alt="[Κολάζ One Piece]" class="w-full h-80 object-cover rounded-lg" onerror="this.src='https://placehold.co/600x400/000000/FFFFFF/png?text=One+Piece+Collage'">
+                        <div class="text-black font-mangaHand text-center mt-2 text-sm font-bold">
+                            "Η περιπέτεια μυρίζει θάλασσα!"
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Η Ιστορία Πίσω & Μπροστά (The Lore) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Το Παρελθόν & Το Μέλλον -->
+                <div class="bg-black/80 p-6 rounded-2xl border-l-4 border-opGold">
+                    <h2 class="font-mangaTitle text-3xl text-opGold mb-4">
+                        <i class="fa-solid fa-book-open mr-2"></i> Η ΙΣΤΟΡΙΑ ΜΑΣ (THE STORY BEHIND & BEYOND)
+                    </h2>
+                    <div class="space-y-4 text-sm text-gray-300 leading-relaxed">
+                        <p>
+                            Όλα ξεκίνησαν με τα τελευταία λόγια του θρυλικού Βασιλιά των Πειρατών, <strong>Γκόλντ Ντ. Ρότζερ (Gol D. Roger)</strong>, στην πλατφόρμα της εκτέλεσής του. Η αποκάλυψη ότι άφησε τον απόλυτο θησαυρό του, το <strong>One Piece</strong>, κάπου στον απέραντο ωκεανό, πυροδότησε τη <em>Μεγάλη Εποχή των Πειρατών (Great Pirate Era)</em>.
+                        </p>
+                        <p>
+                            Στο σήμερα, ο νεαρός <strong>Μόνκι Ντ. Λούφι (Monkey D. Luffy)</strong> σαλπάρει με σκοπό να βρει συντρόφους, να νικήσει πανίσχυρους εχθρούς και να στεφθεί ο επόμενος Βασιλιάς των Πειρατών, πλέοντας στην επικίνδυνη θάλασσα της <strong>Γκράντ Λάιν (Grand Line)</strong>.
+                        </p>
+                        <p class="text-opGold font-semibold">
+                            Γιατί συνεχίζει να συναρπάζει; Διότι συνδυάζει βαθιά πολιτικά μηνύματα, ακραίο worldbuilding και μυστήρια που κρατούν πάνω από 25 χρόνια (όπως ο Χαμένος Αιώνας - Void Century)!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ο Δημιουργός (The Creator - Eiichiro Oda) -->
+                <div class="bg-black/80 p-6 rounded-2xl border-l-4 border-opRed">
+                    <h2 class="font-mangaTitle text-3xl text-opRed mb-4">
+                        <i class="fa-solid fa-pen-nib mr-2"></i> Ο ΔΗΜΙΟΥΡΓΟΣ: EIICHIRO ODA (織田 栄一郎)
+                    </h2>
+                    <div class="space-y-4 text-sm text-gray-300 leading-relaxed">
+                        <p>
+                            Πίσω από αυτό το έπος κρύβεται ένας και μόνο άνθρωπος: ο <strong>Εϊτσίρο Όντα (Eiichiro Oda)</strong>. Ξεκινώντας το One Piece το 1997 στο περιοδικό <em>Weekly Shōnen Jump</em>, ο Oda έχει καταφέρει να μπει στο βιβλίο Γκίνες για τα περισσότερα αντίτυπα που έχουν εκδοθεί για την ίδια σειρά comic από έναν μόνο συγγραφέα.
+                        </p>
+                        <p>
+                            Γνωστός για το απίστευτο πρόγραμμά του (κοιμάται ελάχιστα κατά τη διάρκεια της εργασίας του), ο Oda-sensei σχεδιάζει σχεδόν κάθε χαρακτήρα και background μόνος του, δημιουργώντας ένα σύμπαν με πάνω από 1.000 μοναδικούς χαρακτήρες.
+                        </p>
+                        <div class="bg-white/10 p-3 rounded text-xs italic text-gray-200">
+                            "Αν δεν προσπαθήσεις να σχεδιάσεις αυτό που αγαπάς, δεν θα γίνεις ποτέ καλός manga artist." — Eiichiro Oda
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Οδηγός για τον Αμύητο (Beginner's Guide) -->
+            <div class="bg-white text-black p-6 md:p-8 rounded-3xl manga-border">
+                <h2 class="font-mangaTitle text-3xl md:text-4xl text-opRed tracking-wider mb-4">
+                    ΕΙΣΑΙ ΝΕΟΣ ΣΤΟ ONE PIECE; (NEW TO THE CREW?)
+                </h2>
+                <p class="font-mangaHand text-lg mb-6">
+                    Μην τρομάζεις από τα 1000+ επεισόδια! Εδώ είναι 3 χρυσοί κανόνες για να ξεκινήσεις το ταξίδι σου:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 border-2 border-black rounded-xl bg-yellow-50">
+                        <span class="font-mangaTitle text-2xl text-opRed">01. ΑΠΟΛΑΥΣΕ ΤΟ ΤΑΞΙΔΙ</span>
+                        <p class="text-sm mt-2 text-gray-700">Το One Piece δεν είναι αγώνας δρόμου για το τέλος. Η μαγεία κρύβεται στο build-up της ιστορίας και στους δεσμούς των χαρακτήρων.</p>
+                    </div>
+                    <div class="p-4 border-2 border-black rounded-xl bg-blue-50">
+                        <span class="font-mangaTitle text-2xl text-blue-800">02. ΠΡΟΣΟΧΗ ΣΤΑ FILLERS</span>
+                        <p class="text-sm mt-2 text-gray-700">Χρησιμοποιήστε το μενού μας για να βρείτε ποια επεισόδια είναι Filler, ώστε να κερδίσετε χρόνο αποφεύγοντας δευτερεύουσες ιστορίες.</p>
+                    </div>
+                    <div class="p-4 border-2 border-black rounded-xl bg-green-50">
+                        <span class="font-mangaTitle text-2xl text-green-800">03. MANGA Η ANIME;</span>
+                        <p class="text-sm mt-2 text-gray-700">Το manga έχει απίστευτο art και γρήγορο ρυθμό. Το anime προσφέρει φανταστική μουσική επένδυση και θρυλικές φωνές ηθοποιών (Seiyuu).</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= PAGE 2: CHARACTERS (ΧΑΡΑΚΤΗΡΕΣ) ================= -->
+        <section id="page-characters" class="page-section space-y-8 hidden">
+            <div class="text-center space-y-2">
+                <h1 class="font-mangaTitle text-4xl md:text-6xl text-opGold tracking-wider">
+                    ΤΟ ΠΛΗΡΩΜΑ ΤΩΝ ΨΑΘΙΝΩΝ ΚΑΠΕΛΩΝ (STRAW HAT PIRATES)
+                </h1>
+                <p class="font-mangaHand text-lg text-gray-300">
+                    Γνωρίστε τους θρυλικούς πειρατές της καρδιάς μας, τις δυνάμεις τους και τα όνειρά τους!
+                </p>
+            </div>
+
+            <!-- Φίλτρο Κατηγοριών -->
+            <div class="flex justify-center gap-2 flex-wrap">
+                <button onclick="filterCrew('all')" class="bg-opGold text-black font-mangaTitle px-4 py-2 rounded border border-black hover:bg-white transition-all">ΟΛΟΙ (ALL)</button>
+                <button onclick="filterCrew('monster')" class="bg-black text-opGold font-mangaTitle px-4 py-2 rounded border border-opGold hover:bg-opRed hover:text-white transition-all">Η ΤΡΙΑΔΑ (MONSTER TRIO)</button>
+                <button onclick="filterCrew('fruits')" class="bg-black text-opGold font-mangaTitle px-4 py-2 rounded border border-opGold hover:bg-opRed hover:text-white transition-all">DEVIL FRUIT USERS</button>
+            </div>
+
+            <!-- Πλέγμα Χαρακτήρων (Characters Grid) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="crew-grid">
+                
+                <!-- Λούφι -->
+                <div class="bg-white text-black rounded-3xl p-5 manga-border flex flex-col justify-between h-full crew-card" data-category="monster fruits">
+                    <div>
+                        <div class="relative rounded-2xl overflow-hidden mb-4 border-2 border-black h-64">
+                            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=500&q=80" alt="[Μόνκι Ντ. Λούφι]" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/e63946/ffffff?text=Luffy'">
+                            <span class="absolute top-2 right-2 bg-opRed text-white font-mangaTitle px-3 py-1 text-sm rounded">ΚΑΠΕΤΑΝΙΟΣ</span>
+                        </div>
+                        <h2 class="font-mangaTitle text-3xl text-opRed mb-1">ΜΟΝΚΙ ΝΤ. ΛΟΥΦΙ (MONKEY D. LUFFY)</h2>
+                        <p class="text-xs text-gray-500 font-bold tracking-widest mb-3">ΨΕΥΔΩΝΥΜΟ: Straw Hat (Ψάθινο Καπέλο)</p>
+                        
+                        <div class="space-y-2 text-sm border-t border-gray-200 pt-3">
+                            <p><strong>Δύναμη & Ρόλος:</strong> Αρχηγός του πληρώματος, χρήστης του Haki των Κατακτητών, μάχεται με απίστευτη θέληση.</p>
+                            <p><strong>Φρούτο του Διαβόλου (Devil Fruit):</strong> Gomu Gomu no Mi / Hito Hito no Mi, Model: Nika (Λάστιχο / Μυθικό Zoan).</p>
+                            <p><strong>Όνειρο (Dream):</strong> Να γίνει ο Βασιλιάς των Πειρατών βρίσκοντας το One Piece.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center bg-yellow-100 p-2 rounded-xl">
+                        <span class="text-xs font-bold">BOUNTY:</span>
+                        <span class="font-mangaTitle text-lg text-opRed">3,000,000,000 ฿</span>
+                    </div>
+                </div>
+
+                <!-- Ζόρο -->
+                <div class="bg-white text-black rounded-3xl p-5 manga-border flex flex-col justify-between h-full crew-card" data-category="monster">
+                    <div>
+                        <div class="relative rounded-2xl overflow-hidden mb-4 border-2 border-black h-64">
+                            <img src="https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?auto=format&fit=crop&w=500&q=80" alt="[Ρορονόα Ζόρο]" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/1b4332/ffffff?text=Zoro'">
+                            <span class="absolute top-2 right-2 bg-green-700 text-white font-mangaTitle px-3 py-1 text-sm rounded">ΥΠΑΡΧΗΓΟΣ</span>
+                        </div>
+                        <h2 class="font-mangaTitle text-3xl text-green-800 mb-1">ΡΟΡΟΝΟΑ ΖΟΡΟ (RORONOA ZORO)</h2>
+                        <p class="text-xs text-gray-500 font-bold tracking-widest mb-3">ΨΕΥΔΩΝΥΜΟ: Pirate Hunter (Κυνηγός Πειρατών)</p>
+                        
+                        <div class="space-y-2 text-sm border-t border-gray-200 pt-3">
+                            <p><strong>Δύναμη & Ρόλος:</strong> Ξιφομάχος, χρησιμοποιεί το στυλ των Τριών Σπαθιών (Santoryu) με τρομερή σωματική δύναμη.</p>
+                            <p><strong>Φρούτο του Διαβόλου:</strong> Κανένα (Βασίζεται αποκλειστικά στο Haki και τα σπαθιά του).</p>
+                            <p><strong>Όνειρο (Dream):</strong> Να νικήσει τον Mihawk και να γίνει ο Καλύτερος Ξιφομάχος στον Κόσμο.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center bg-green-100 p-2 rounded-xl">
+                        <span class="text-xs font-bold">BOUNTY:</span>
+                        <span class="font-mangaTitle text-lg text-green-800">1,111,000,000 ฿</span>
+                    </div>
+                </div>
+
+                <!-- Σάντζι -->
+                <div class="bg-white text-black rounded-3xl p-5 manga-border flex flex-col justify-between h-full crew-card" data-category="monster">
+                    <div>
+                        <div class="relative rounded-2xl overflow-hidden mb-4 border-2 border-black h-64">
+                            <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&w=500&q=80" alt="[Βινσμόουκ Σάντζι]" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/000814/ffffff?text=Sanji'">
+                            <span class="absolute top-2 right-2 bg-blue-900 text-white font-mangaTitle px-3 py-1 text-sm rounded">ΜΑΓΕΙΡΑΣ</span>
+                        </div>
+                        <h2 class="font-mangaTitle text-3xl text-blue-900 mb-1">ΒΙΝΣΜΟΟΥΚ ΣΑΝΤΖΙ (VINSMOKE SANJI)</h2>
+                        <p class="text-xs text-gray-500 font-bold tracking-widest mb-3">ΨΕΥΔΩΝΥΜΟ: Black Leg (Μαυροπόδαρος)</p>
+                        
+                        <div class="space-y-2 text-sm border-t border-gray-200 pt-3">
+                            <p><strong>Δύναμη & Ρόλος:</strong> Μάγειρας του πλοίου. Πολεμά μόνο με τα πόδια του (για να προστατεύει τα χέρια του που μαγειρεύουν) χρησιμοποιώντας φωτιά (Diable Jambe).</p>
+                            <p><strong>Φρούτο του Διαβόλου:</strong> Κανένα (Γενετικά τροποποιημένος εξωσκελετός).</p>
+                            <p><strong>Όνειρο (Dream):</strong> Να ανακαλύψει τη θρυλική θάλασσα All Blue, όπου ζουν όλα τα ψάρια του κόσμου.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center bg-blue-100 p-2 rounded-xl">
+                        <span class="text-xs font-bold">BOUNTY:</span>
+                        <span class="font-mangaTitle text-lg text-blue-900">1,032,000,000 ฿</span>
+                    </div>
+                </div>
+
+                <!-- Νάμι -->
+                <div class="bg-white text-black rounded-3xl p-5 manga-border flex flex-col justify-between h-full crew-card" data-category="">
+                    <div>
+                        <div class="relative rounded-2xl overflow-hidden mb-4 border-2 border-black h-64">
+                            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80" alt="[Νάμι]" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/f5a623/ffffff?text=Nami'">
+                            <span class="absolute top-2 right-2 bg-yellow-600 text-white font-mangaTitle px-3 py-1 text-sm rounded">ΠΛΟΗΓΟΣ</span>
+                        </div>
+                        <h2 class="font-mangaTitle text-3xl text-yellow-600 mb-1">ΝΑΜΙ (NAMI)</h2>
+                        <p class="text-xs text-gray-500 font-bold tracking-widest mb-3">ΨΕΥΔΩΝΥΜΟ: Cat Burglar (Κλέφτρα Γατούλα)</p>
+                        
+                        <div class="space-y-2 text-sm border-t border-gray-200 pt-3">
+                            <p><strong>Δύναμη & Ρόλος:</strong> Απίστευτες ικανότητες πλοήγησης και μετεωρολογίας. Χρησιμοποιεί το ραβδί Clima-Tact για να ελέγχει τον καιρό και τους κεραυνούς.</p>
+                            <p><strong>Φρούτο του Διαβόλου:</strong> Κανένα.</p>
+                            <p><strong>Όνειρο (Dream):</strong> Να σχεδιάσει τον πρώτο πλήρη χάρτη ολόκληρου του κόσμου.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center bg-orange-100 p-2 rounded-xl">
+                        <span class="text-xs font-bold">BOUNTY:</span>
+                        <span class="font-mangaTitle text-lg text-yellow-600">366,000,000 ฿</span>
+                    </div>
+                </div>
+
+                <!-- Νίκο Ρόμπιν -->
+                <div class="bg-white text-black rounded-3xl p-5 manga-border flex flex-col justify-between h-full crew-card" data-category="fruits">
+                    <div>
+                        <div class="relative rounded-2xl overflow-hidden mb-4 border-2 border-black h-64">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=500&q=80" alt="[Νίκο Ρόμπιν]" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/5c3d98/ffffff?text=Robin'">
+                            <span class="absolute top-2 right-2 bg-purple-800 text-white font-mangaTitle px-3 py-1 text-sm rounded">ΑΡΧΑΙΟΛΟΓΟΣ</span>
+                        </div>
+                        <h2 class="font-mangaTitle text-3xl text-purple-800 mb-1">ΝΙΚΟ ΡΟΜΠΙΝ (NICO ROBIN)</h2>
+                        <p class="text-xs text-gray-500 font-bold tracking-widest mb-3">ΨΕΥΔΩΝΥΜΟ: Devil Child (Παιδί του Διαβόλου)</p>
+                        
+                        <div class="space-y-2 text-sm border-t border-gray-200 pt-3">
+                            <p><strong>Δύναμη & Ρόλος:</strong> Η μόνη επιζήσασα της Ohara που μπορεί να διαβάζει τα Poneglyphs. Ικανή στη μάχη μέσω πολλαπλών μελών.</p>
+                            <p><strong>Φρούτο του Διαβόλου:</strong> Hana Hana no Mi (Φρούτο των Ανθέων - βλασταίνει μέλη του σώματός της οπουδήποτε).</p>
+                            <p><strong>Όνειρο (Dream):</strong> Να ανακαλύψει το Rio Poneglyph και να μάθει την αλήθεια για τον Χαμένο Αιώνα.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center bg-purple-100 p-2 rounded-xl">
+                        <span class="text-xs font-bold">BOUNTY:</span>
+                        <span class="font-mangaTitle text-lg text-purple-800">930,000,000 ฿</span>
+                    </div>
+                </div>
+
+                <!-- Τσόπερ -->
+                <div class="bg-white text-black rounded-3xl p-5 manga-border flex flex-col justify-between h-full crew-card" data-category="fruits">
+                    <div>
+                        <div class="relative rounded-2xl overflow-hidden mb-4 border-2 border-black h-64">
+                            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80" alt="[Τόνι Τόνι Τσόπερ]" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/ffb3c1/ffffff?text=Chopper'">
+                            <span class="absolute top-2 right-2 bg-pink-500 text-white font-mangaTitle px-3 py-1 text-sm rounded">ΓΙΑΤΡΟΣ</span>
+                        </div>
+                        <h2 class="font-mangaTitle text-3xl text-pink-600 mb-1">ΤΟΝΙ ΤΟΝΙ ΤΣΟΠΕΡ (TONY TONY CHOPPER)</h2>
+                        <p class="text-xs text-gray-500 font-bold tracking-widest mb-3">ΨΕΥΔΩΝΥΜΟ: Cotton Candy Lover (Λάτρης του Μαλλιού της Γριάς)</p>
+                        
+                        <div class="space-y-2 text-sm border-t border-gray-200 pt-3">
+                            <p><strong>Δύναμη & Ρόλος:</strong> Τάρανδος που απέκτησε ανθρώπινη νοημοσύνη. Εξαιρετικός γιατρός, μπορεί να μεταμορφώνεται σε διάφορες μορφές για μάχη.</p>
+                            <p><strong>Φρούτο του Διαβόλου:</strong> Hito Hito no Mi (Ανθρώπινο Φρούτο).</p>
+                            <p><strong>Όνειρο (Dream):</strong> Να γίνει ένας γιατρός ικανός να θεραπεύσει κάθε ασθένεια στον κόσμο.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center bg-pink-100 p-2 rounded-xl">
+                        <span class="text-xs font-bold">BOUNTY:</span>
+                        <span class="font-mangaTitle text-lg text-pink-600">1,000 ฿ (Το αστείο της κυβέρνησης!)</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: SEASONS (ΣΕΖΟΝ & SAGAS) ================= -->
+        <section id="page-seasons" class="page-section space-y-8 hidden">
+            <div class="text-center space-y-2">
+                <h1 class="font-mangaTitle text-4xl md:text-6xl text-opGold tracking-wider">
+                    ΟΙ ΣΕΖΟΝ & ΤΑ ΜΕΓΑΛΑ ΤΑΞΙΔΙΑ (SAGAS & ARCHIPELAGOS)
+                </h1>
+                <p class="font-mangaHand text-lg text-gray-300">
+                    Περιηγηθείτε στις επίσημες σεζόν! Το background αλλάζει ανάλογα με το νησί που διαδραματίζεται η ιστορία!
+                </p>
+            </div>
+
+            <!-- Season Selector (Slider/Navigation Tabs) -->
+            <div class="flex gap-2 overflow-x-auto py-4 px-2 no-scrollbar justify-start md:justify-center">
+                <button onclick="changeSeason(1)" id="btn-s1" class="season-tab-btn bg-opGold text-black font-mangaTitle px-4 py-2 rounded manga-border shrink-0">
+                    Σεζόν 1: East Blue (Ep. 1-61)
+                </button>
+                <button onclick="changeSeason(2)" id="btn-s2" class="season-tab-btn bg-black text-white font-mangaTitle px-4 py-2 rounded border border-white shrink-0 hover:bg-opRed transition-all">
+                    Σεζόν 2: Alabasta (Ep. 62-135)
+                </button>
+                <button onclick="changeSeason(3)" id="btn-s3" class="season-tab-btn bg-black text-white font-mangaTitle px-4 py-2 rounded border border-white shrink-0 hover:bg-opRed transition-all">
+                    Σεζόν 3: Skypeia (Ep. 136-206)
+                </button>
+                <button onclick="changeSeason(4)" id="btn-s4" class="season-tab-btn bg-black text-white font-mangaTitle px-4 py-2 rounded border border-white shrink-0 hover:bg-opRed transition-all">
+                    Σεζόν 4: Water 7 (Ep. 207-325)
+                </button>
+                <button onclick="changeSeason(5)" id="btn-s5" class="season-tab-btn bg-black text-white font-mangaTitle px-4 py-2 rounded border border-white shrink-0 hover:bg-opRed transition-all">
+                    Σεζόν 5: Wano Country (Ep. 892-1085)
+                </button>
+            </div>
+
+            <!-- Season Detail Card (Με dynamic background) -->
+            <div id="season-display-card" class="bg-black/90 rounded-3xl p-6 md:p-10 manga-border border-opGold transition-all duration-500 relative overflow-hidden min-h-[450px] flex flex-col justify-between">
+                
+                <!-- Background Image Layer (Θολό & Ξεθωριασμένο Νησί) -->
+                <div id="season-bg-img" class="absolute inset-0 bg-cover bg-center opacity-30 filter blur-sm transition-all duration-700 z-0" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80');"></div>
+
+                <!-- Περιεχόμενο (Πάνω από το BG) -->
+                <div class="relative z-10 space-y-6">
+                    <div class="flex justify-between items-center flex-wrap gap-4 border-b border-gray-700 pb-4">
+                        <div>
+                            <span id="season-num" class="bg-opRed text-white font-mangaTitle px-3 py-1 text-sm rounded">ΣΕΖΟΝ 1</span>
+                            <h2 id="season-title" class="font-mangaTitle text-3xl md:text-5xl text-opGold mt-1">ΑΝΑΤΟΛΙΚΗ ΘΑΛΑΣΣΑ (EAST BLUE SAGA)</h2>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-400 font-bold">ΕΥΡΟΣ ΕΠΕΙΣΟΔΙΩΝ</p>
+                            <p id="season-episodes" class="font-mangaTitle text-2xl text-white">Επεισόδια 1 - 61</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-8 space-y-4">
+                            <h3 class="font-mangaTitle text-2xl text-white">ΤΟΠΟΘΕΣΙΑ: <span id="season-location" class="text-opGold">Loguetown (Λόγκταουν) & Shells Town</span></h3>
+                            <p id="season-summary" class="text-gray-300 leading-relaxed text-sm md:text-base">
+                                Εδώ ξεκινάει το όνειρο! Ο Monkey D. Luffy αποκτά τις δυνάμεις του φρούτου του διαβόλου και ξεκινά το ταξίδι του από το χωριό Foosha. Στη διαδρομή του στο East Blue στρατολογεί τους πρώτους του πιστούς συντρόφους: τον Zoro, την Nami, τον Usopp και τον Sanji, και αποκτά το πρώτο του καράβι, το ξακουστό Going Merry. Μαζί αντιμετωπίζουν τρομερούς πειρατές όπως ο Buggy, ο Kuro, ο Don Krieg και ο τρομερός Arlong, πριν περάσουν τη Red Line για να εισέλθουν στη Grand Line!
+                            </p>
+                        </div>
+                        <div class="lg:col-span-4 bg-black/50 p-4 rounded-2xl border border-white/20 backdrop-blur-md">
+                            <h4 class="font-mangaTitle text-lg text-opGold mb-2"><i class="fa-solid fa-star mr-1"></i> ΣΗΜΑΝΤΙΚΑ HIGHLIGHTS</h4>
+                            <ul id="season-highlights" class="space-y-2 text-xs text-gray-200">
+                                <li>• Η υπόσχεση του Luffy στον Shanks και το Ψάθινο Καπέλο.</li>
+                                <li>• Η επική μάχη του Zoro με τον Mihawk στο Baratie.</li>
+                                <li>• Το ξέσπασμα της Nami και η πτώση του Arlong Park.</li>
+                                <li>• Η εκτέλεση που αποφεύχθηκε την τελευταία στιγμή στο Loguetown.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative z-10 flex justify-between items-center mt-6 pt-4 border-t border-gray-800">
+                    <span class="text-xs text-gray-400 italic">Συμβουλή: Κάντε κλικ στα tabs για να ταξιδέψετε σε άλλο νησί!</span>
+                    <button onclick="showPage('fillers')" class="text-sm text-opGold hover:underline">
+                        Δες ποια επεισόδια αυτής της σεζόν είναι Filler <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 4: FILLER EPISODES (FILLER SKIP GUIDE) ================= -->
+        <section id="page-fillers" class="page-section space-y-8 hidden">
+            <div class="text-center space-y-2">
+                <h1 class="font-mangaTitle text-4xl md:text-6xl text-opRed tracking-wider">
+                    ΟΔΗΓΟΣ FILLER ΕΠΕΙΣΟΔΙΩΝ (THE SKIP & SPIN-OFF GUIDE)
+                </h1>
+                <p class="font-mangaHand text-lg text-gray-300">
+                    Θέλετε να δείτε μόνο την επίσημη ιστορία (Canon) ή ψάχνετε για ωραία fillers σαν ξεχωριστές ιστορίες; Δείτε αναλυτικά ανά σεζόν!
+                </p>
+            </div>
+
+            <!-- Alert Box / Πληροφορία -->
+            <div class="bg-blue-950/90 border-2 border-blue-500 p-4 rounded-xl text-sm flex gap-3 items-center">
+                <i class="fa-solid fa-circle-info text-2xl text-blue-400"></i>
+                <p>
+                    <strong>Τι είναι τα Fillers;</strong> Είναι επεισόδια που δημιουργήθηκαν από το studio κινουμένων σχεδίων (Toei Animation) για να μην προλάβει το anime το manga. Μπορείτε να τα προσπεράσετε άφοβα αν βιάζεστε, ή να τα δείτε αργότερα σαν αυτόνομες πειρατικές περιπέτειες!
+                </p>
+            </div>
+
+            <!-- Αναζήτηση / Φιλτράρισμα -->
+            <div class="bg-black/80 p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4">
+                <span class="font-mangaTitle text-xl text-opGold">ΛΙΣΤΑ ΑΝΑ ΣΕΖΟΝ (LIST BY SEASON)</span>
+                <span class="text-xs bg-opRed px-3 py-1 rounded-full font-bold">ΣΥΝΟΛΟ FILLERS: ~10% ΤΟΥ ANIME</span>
+            </div>
+
+            <!-- Filler Seasons Accordion / List -->
+            <div class="space-y-4">
+                
+                <!-- Arc 1 -->
+                <div class="bg-white text-black rounded-2xl p-5 manga-border">
+                    <div class="flex justify-between items-center flex-wrap gap-2 border-b-2 border-black pb-2 mb-3">
+                        <span class="font-mangaTitle text-xl text-opRed">EAST BLUE SAGA (ΣΕΖΟΝ 1)</span>
+                        <span class="text-xs font-bold bg-black text-white px-2 py-1 rounded">Επεισόδια 1 - 61</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3">Συνολικά Fillers σε αυτή τη σεζόν:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                            <span class="font-bold text-sm text-opRed">Επεισόδια 54 - 61 (Warship Island Arc)</span>
+                            <p class="text-xs text-gray-700 mt-1">Η πρώτη filler ιστορία με το κοριτσάκι Apis και έναν αρχαίο δράκο. Προτείνεται για skip αν βιάζεστε να μπείτε στο Grand Line.</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="font-bold text-sm text-gray-800">Επεισόδιο 50 & 51 (Loguetown Fillers)</span>
+                            <p class="text-xs text-gray-600 mt-1">Μικρές, διασκεδαστικές ιστορίες στο Loguetown (ο Usopp μονομαχεί με έναν bounty hunter και ο Sanji σε διαγωνισμό μαγειρικής).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arc 2 -->
+                <div class="bg-white text-black rounded-2xl p-5 manga-border">
+                    <div class="flex justify-between items-center flex-wrap gap-2 border-b-2 border-black pb-2 mb-3">
+                        <span class="font-mangaTitle text-xl text-opRed">ALABASTA SAGA (ΣΕΖΟΝ 2)</span>
+                        <span class="text-xs font-bold bg-black text-white px-2 py-1 rounded">Επεισόδια 62 - 135</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3">Συνολικά Fillers σε αυτή τη σεζόν:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                            <span class="font-bold text-sm text-opRed">Επεισόδια 131 - 135 (Post-Alabasta Arc)</span>
+                            <p class="text-xs text-gray-700 mt-1">Αυτόνομες ιστορίες για κάθε μέλος του πληρώματος (Zoro, Nami, Usopp, Chopper, Sanji) και το παρελθόν τους.</p>
+                        </div>
+                        <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                            <span class="font-bold text-sm text-opRed">Επεισόδια 93, 98, 99, 102 (Alabasta Desert Fillers)</span>
+                            <p class="text-xs text-gray-700 mt-1">Επεισόδια στην έρημο της Alabasta καθώς το πλήρωμα ταξιδεύει. Μπορούν να παραλειφθούν εύκολα.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arc 3 -->
+                <div class="bg-white text-black rounded-2xl p-5 manga-border">
+                    <div class="flex justify-between items-center flex-wrap gap-2 border-b-2 border-black pb-2 mb-3">
+                        <span class="font-mangaTitle text-xl text-opRed">SKY ISLAND SAGA (ΣΕΖΟΝ 3)</span>
+                        <span class="text-xs font-bold bg-black text-white px-2 py-1 rounded">Επεισόδια 136 - 206</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3">Συνολικά Fillers σε αυτή τη σεζόν:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                            <span class="font-bold text-sm text-opRed">Επεισόδια 136 - 138 (Goat Island Arc)</span>
+                            <p class="text-xs text-gray-700 mt-1">Το πλήρωμα βοηθά έναν ηλικιωμένο άντρα με τις κατσίκες του σε ένα απομονωμένο νησί.</p>
+                        </div>
+                        <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                            <span class="font-bold text-sm text-opRed">Επεισόδια 139 - 143 (Ruluka Island Arc)</span>
+                            <p class="text-xs text-gray-700 mt-1">Μια ιστορία με ένα παράξενο ουράνιο τόξο (Rainbow Mist) που παγιδεύει πλοία στο χρόνο.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arc 4 (The legendary G-8) -->
+                <div class="bg-white text-black rounded-2xl p-5 manga-border">
+                    <div class="flex justify-between items-center flex-wrap gap-2 border-b-2 border-black pb-2 mb-3">
+                        <span class="font-mangaTitle text-xl text-opRed">WATER 7 / ENIES LOBBY (ΣΕΖΟΝ 4)</span>
+                        <span class="text-xs font-bold bg-black text-white px-2 py-1 rounded">Επεισόδια 207 - 325</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3">Συνολικά Fillers σε αυτή τη σεζόν (ΠΡΟΣΟΧΗ: Εδώ βρίσκεται το καλύτερο filler του anime!):</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-green-50 rounded-lg border border-green-200">
+                            <span class="font-bold text-sm text-green-800">Επεισόδια 196 - 206 (G-8 Arc) - MUST WATCH!</span>
+                            <p class="text-xs text-gray-700 mt-1"><strong>Το καλύτερο filler στην ιστορία του anime!</strong> Το Going Merry προσγειώνεται μέσα σε μια πανίσχυρη ναυτική βάση. Το πλήρωμα πρέπει να κρυφτεί και να αποδράσει. Πολύ καλογραμμένο!</p>
+                        </div>
+                        <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                            <span class="font-bold text-sm text-opRed">Επεισόδια 220 - 224 (Ocean's Dream Arc)</span>
+                            <p class="text-xs text-gray-700 mt-1">Βασισμένο σε βιντεοπαιχνίδι One Piece, όπου ένα θαλάσσιο ιππόκαμπο κλέβει τις αναμνήσεις του πληρώματος.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 5: SHOPS (ΕΛΛΗΝΙΚΑ ONLINE ΚΑΤΑΣΤΗΜΑΤΑ) ================= -->
+        <section id="page-shops" class="page-section space-y-8 hidden">
+            <div class="text-center space-y-2">
+                <h1 class="font-mangaTitle text-4xl md:text-6xl text-opGold tracking-wider">
+                    ΕΛΛΗΝΙΚΑ ONLINE ΚΑΤΑΣΤΗΜΑΤΑ (ANIME SHOPS GREECE)
+                </h1>
+                <p class="font-mangaHand text-lg text-gray-300">
+                    Αγοράστε φιγούρες, manga, t-shirts και άλλα είδη One Piece από αξιόπιστα ελληνικά καταστήματα!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Shop 1: OtakuStore -->
+                <div class="bg-white text-black rounded-3xl p-6 manga-border flex flex-col justify-between">
+                    <div>
+                        <div class="bg-opRed text-white p-4 rounded-xl text-center mb-4">
+                            <i class="fa-solid fa-store text-4xl"></i>
+                            <h3 class="font-mangaTitle text-2xl mt-2">OTAKUSTORE.GR</h3>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Ένα από τα πιο γνωστά ελληνικά e-shops για anime φιγούρες, cosplay, t-shirts, και αξεσουάρ. Διαθέτει τεράστια ποικιλία από One Piece merchandise!
+                        </p>
+                        <div class="space-y-1 text-xs text-gray-500 mb-4">
+                            <p><i class="fa-solid fa-location-dot mr-1"></i> Έδρα: Θεσσαλονίκη, Ελλάδα</p>
+                            <p><i class="fa-solid fa-truck mr-1"></i> Αποστολή: Πανελλαδικά με Courier</p>
+                        </div>
+                    </div>
+                    <a href="https://www.otakustore.gr" target="_blank" rel="noopener noreferrer" class="block text-center bg-black text-opGold hover:bg-opRed hover:text-white font-mangaTitle py-3 rounded-xl transition-all">
+                        ΕΠΙΣΚΕΨΗ ΣΤΟ SITE <i class="fa-solid fa-external-link ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Shop 2: Anime House -->
+                <div class="bg-white text-black rounded-3xl p-6 manga-border flex flex-col justify-between">
+                    <div>
+                        <div class="bg-blue-800 text-white p-4 rounded-xl text-center mb-4">
+                            <i class="fa-solid fa-shop text-4xl"></i>
+                            <h3 class="font-mangaTitle text-2xl mt-2">ANIME HOUSE</h3>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Εξειδικευμένο κατάστημα με φυσική παρουσία και e-shop. Θα βρείτε αυθεντικές φιγούρες Bandai, Banpresto, καθώς και t-shirts, κούπες και μπρελόκ One Piece.
+                        </p>
+                        <div class="space-y-1 text-xs text-gray-500 mb-4">
+                            <p><i class="fa-solid fa-location-dot mr-1"></i> Έδρα: Θεσσαλονίκη, Ελλάδα</p>
+                            <p><i class="fa-solid fa-truck mr-1"></i> Αποστολή: Πανελλαδικά / BoxNow διαθέσιμο</p>
+                        </div>
+                    </div>
+                    <a href="https://www.animehouse.gr" target="_blank" rel="noopener noreferrer" class="block text-center bg-black text-opGold hover:bg-opRed hover:text-white font-mangaTitle py-3 rounded-xl transition-all">
+                        ΕΠΙΣΚΕΨΗ ΣΤΟ SITE <i class="fa-solid fa-external-link ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Shop 3: Jemma Press / Comic Shops -->
+                <div class="bg-white text-black rounded-3xl p-6 manga-border flex flex-col justify-between">
+                    <div>
+                        <div class="bg-green-700 text-white p-4 rounded-xl text-center mb-4">
+                            <i class="fa-solid fa-book text-4xl"></i>
+                            <h3 class="font-mangaTitle text-2xl mt-2">JEMMA BOOKS & COMICS</h3>
+                        </div>
+                        <p class="text-sm text-gray-700 mb-4">
+                            Αν ψάχνετε τα επίσημα Manga (τόμους βιβλίων) στα ελληνικά ή στα αγγλικά, το Jemma Press είναι η ιδανική επιλογή.
+                        </p>
+                        <div class="space-y-1 text-xs text-gray-500 mb-4">
+                            <p><i class="fa-solid fa-location-dot mr-1"></i> Έδρα: Πειραιάς, Αθήνα</p>
+                            <p><i class="fa-solid fa-truck mr-1"></i> Αποστολή: Πανελλαδικά</p>
+                        </div>
+                    </div>
+                    <a href="https://jemmapress.gr" target="_blank" rel="noopener noreferrer" class="block text-center bg-black text-opGold hover:bg-opRed hover:text-white font-mangaTitle py-3 rounded-xl transition-all">
+                        ΕΠΙΣΚΕΨΗ ΣΤΟ SITE <i class="fa-solid fa-external-link ml-1"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Warning/Advice για αγορές -->
+            <div class="bg-black/90 border-2 border-opGold p-6 rounded-2xl space-y-2 text-sm text-gray-300">
+                <h4 class="font-mangaTitle text-xl text-opGold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> ΣΥΜΒΟΥΛΕΣ ΓΙΑ ΑΣΦΑΛΕΙΣ ΑΓΟΡΕΣ ΦΙΓΟΥΡΩΝ (PRO PIRATE TIP)</h4>
+                <p>
+                    Προσοχή στις πολύ φτηνές φιγούρες One Piece από άγνωστα e-shops! Η αγορά είναι γεμάτη με φτηνές απομιμήσεις (bootlegs). Ψάχνετε πάντα για το αυτοκόλλητο της <strong>Toei Animation</strong> πάνω στο κουτί για να είστε σίγουροι ότι αγοράζετε αυθεντικά προϊόντα.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t-4 border-black bg-black text-gray-400 py-8 px-6 mt-12 text-center text-sm">
+        <div class="max-w-7xl mx-auto space-y-4">
+            <p class="font-mangaTitle text-2xl text-opGold tracking-wider">
+                "Η ΚΛΗΡΟΝΟΜΙΑ ΠΟΥ ΔΕΝ ΠΕΘΑΙΝΕΙ ΠΟΤΕ, ΤΟ ΠΕΡΑΣΜΑ ΤΟΥ ΧΡΟΝΟΥ, ΚΑΙ ΤΑ ΟΝΕΙΡΑ ΤΩΝ ΑΝΘΡΩΠΩΝ." — Gol D. Roger
+            </p>
+            <p class="font-light text-xs">
+                © 2026 One Piece Greek Fan Hub. Κατασκευάστηκε με αγάπη για την ελληνική κοινότητα των Otaku. Όλα τα πνευματικά δικαιώματα του One Piece ανήκουν στον Eiichiro Oda και την Toei Animation.
+            </p>
+            <div class="flex justify-center gap-6 text-xl">
+                <a href="#" class="hover:text-opGold"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="hover:text-opRed"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="hover:text-opGold"><i class="fa-brands fa-reddit"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT ΓΙΑ ΤΗ ΛΕΙΤΟΥΡΓΙΚΟΤΗΤΑ & ΤΙΣ ΔΥΝΑΜΙΚΕΣ ΑΛΛΑΓΕΣ -->
+    <script>
+        // 1. Έλεγχος του Slide-out Μενού
+        function toggleMenu() {
+            const menu = document.getElementById('side-menu');
+            const backdrop = document.getElementById('menu-backdrop');
+            
+            if (menu.classList.contains('translate-x-full')) {
+                // Άνοιγμα Μενού
+                menu.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Απενεργοποίηση scrolling στο background
+            } else {
+                // Κλείσιμο Μενού
+                menu.classList.add('translate-x-full');
+                backdrop.classList.add('hidden');
+                document.body.style.overflow = ''; // Επαναφορά scrolling
+            }
+        }
+
+        // 2. Πλοήγηση μέσω του Slide-out μενού
+        function navigate(pageId) {
+            toggleMenu(); // Κλείσιμο μενού
+            setTimeout(() => {
+                showPage(pageId);
+            }, 300); // Μικρή καθυστέρηση για ομαλό transition
+        }
+
+        // 3. Σύστημα Πλοήγησης (Pages Switcher)
+        function showPage(pageId) {
+            // Κρύβουμε όλα τα sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.add('hidden'));
+
+            // Εμφανίζουμε το επιθυμητό section
+            const activeSection = document.getElementById('page-' + pageId);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+            }
+
+            // Scroll στην κορυφή
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Αλλαγή κεντρικού background ανάλογα με τη σελίδα για ατμόσφαιρα κολάζ
+            const body = document.getElementById('main-body');
+            if (pageId === 'index') {
+                body.style.backgroundImage = "url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1920&q=80')";
+            } else if (pageId === 'characters') {
+                body.style.backgroundImage = "url('https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1920&q=80')";
+            } else if (pageId === 'seasons') {
+                updateSeasonBg();
+            } else if (pageId === 'fillers') {
+                body.style.backgroundImage = "url('https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&w=1920&q=80')";
+            } else if (pageId === 'shops') {
+                body.style.backgroundImage = "url('https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1920&q=80')";
+            }
+        }
+
+        // 4. Φίλτρα χαρακτήρων
+        function filterCrew(category) {
+            const cards = document.querySelectorAll('.crew-card');
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.classList.remove('hidden');
+                } else {
+                    const cardCats = card.getAttribute('data-category').split(' ');
+                    if (cardCats.includes(category)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // 5. Δεδομένα για τις Σεζόν (Seasons Data)
+        const seasonsData = {
+            1: {
+                num: "ΣΕΖΟΝ 1",
+                title: "ΑΝΑΤΟΛΙΚΗ ΘΑΛΑΣΣΑ (EAST BLUE SAGA)",
+                episodes: "Επεισόδια 1 - 61",
+                location: "Loguetown (Λόγκταουν) & Arlong Park",
+                summary: "Εδώ ξεκινάει το όνειρο! Ο Monkey D. Luffy αποκτά τις δυνάμεις του φρούτου του διαβόλου και ξεκινά το ταξίδι του από το χωριό Foosha. Στη διαδρομή του στο East Blue στρατολογεί τους πρώτους του πιστούς συντρόφους: τον Zoro, την Nami, τον Usopp και τον Sanji. Μαζί αντιμετωπίζουν τρομερούς πειρατές όπως ο Buggy, ο Kuro, ο Don Krieg και ο Arlong, πριν περάσουν τη Red Line για να εισέλθουν στη Grand Line!",
+                highlights: [
+                    "• Η υπόσχεση του Luffy στον Shanks και το Ψάθινο Καπέλο.",
+                    "• Η επική μάχη του Zoro με τον Mihawk στο Baratie.",
+                    "• Το ξέσπασμα της Nami και η πτώση του Arlong Park.",
+                    "• Η εκτέλεση που αποφεύχθηκε την τελευταία στιγμή στο Loguetown."
+                ],
+                bg: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80"
+            },
+            2: {
+                num: "ΣΕΖΟΝ 2",
+                title: "ΕΠΟΣ ΤΗΣ ΑΛΑΜΠΑΣΤΑ (ALABASTA SAGA)",
+                episodes: "Επεισόδια 62 - 135",
+                location: "Alabasta Desert Kingdom (Έρημος της Αλαμπάστα)",
+                summary: "Το πλήρωμα εισέρχεται στη Grand Line και αναλαμβάνει να βοηθήσει την πριγκίπισσα Nefertari Vivi να σώσει το βασίλειό της από τον εμφύλιο πόλεμο. Εκεί αντιμετωπίζουν την εγκληματική οργάνωση Baroque Works, με αρχηγό τον Shichibukai Crocodile. Στο πλήρωμα προστίθεται ο Chopper, ενώ γνωρίζουμε και τον Ace στην έρημο!",
+                highlights: [
+                    "• Η είσοδος στη Grand Line και η γνωριμία με το φαλαινοειδές Laboon.",
+                    "• Ο θάνατος του Hiriluk και η ένταξη του Chopper.",
+                    "• Η επική μάχη Luffy εναντίον Crocodile στην έρημο.",
+                    "• Η ιστορική στιγμή του αποχαιρετισμού της Vivi με τα υψωμένα χέρια."
+                ],
+                bg: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1000&q=80"
+            },
+            3: {
+                num: "ΣΕΖΟΝ 3",
+                title: "ΤΟ ΝΗΣΙ ΤΟΥ ΟΥΡΑΝΟΥ (SKYPIEA SAGA)",
+                episodes: "Επεισόδια 136 - 206",
+                location: "Skypiea (Σκάιπια - Νησί του Ουρανού)",
+                summary: "Οι Ψάθινοι Καπέλοι ανακαλύπτουν έναν τρόπο να εκτοξευθούν στον ουρανό χρησιμοποιώντας το Knock Up Stream! Εκεί βρίσκουν μια μυθική χρυσή πόλη στον ουρανό και εμπλέκονται σε έναν πόλεμο μεταξύ των ιθαγενών Shandians και του αυτοαποκαλούμενου 'Θεού' Enel, ο οποίος ελέγχει την αστραπή. Ο Luffy είναι ο μόνος που μπορεί να τον αντιμετωπίσει επειδή είναι από λάστιχο!",
+                highlights: [
+                    "• Η ομιλία του Blackbeard στο Mock Town για τα όνειρα των ανθρώπων.",
+                    "• Η ανάβαση στον ουρανό με το Going Merry.",
+                    "• Η αναμέτρηση με τον 'Θεό' Enel και η απίθανη ανοσία του Luffy.",
+                    "• Το χτύπημα της χρυσής καμπάνας για να ακουστεί ο ήχος στη γη."
+                ],
+                bg: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1000&q=80"
+            },
+            4: {
+                num: "ΣΕΖΟΝ 4",
+                title: "ΓΟΥΟΤΕΡ ΣΕΒΕΝ & ΕΝΙΕΣ ΛΟΜΠΙ (WATER 7 SAGA)",
+                episodes: "Επεισόδια 207 - 325",
+                location: "Water 7 (Γουότερ Σέβεν) & Enies Lobby (Ένιες Λόμπι)",
+                summary: "Ίσως το πιο δραματικό saga. Το Going Merry δεν μπορεί πλέον να επισκευαστεί, οδηγώντας σε σφοδρή σύγκρουση τον Luffy με τον Usopp. Παράλληλα, η Robin παραδίδεται στη μυστική υπηρεσία CP9 της Παγκόσμιας Κυβέρνησης για να προστατεύσει το πλήρωμα. Ο Luffy κηρύσσει τον πόλεμο σε ολόκληρο τον κόσμο για να τη σώσει, εισβάλλοντας στο δικαστικό νησί Enies Lobby!",
+                highlights: [
+                    "• Η σπαρακτική μονομαχία Luffy εναντίον Usopp για το Going Merry.",
+                    "• Η Robin φωνάζει με δάκρυα στα μάτια: 'Θέλω να ζήσω!'.",
+                    "• Η αποκάλυψη των νέων δυνάμεων Gear Second και Gear Third.",
+                    "• Η τελευταία πλεύση και η κηδεία του αγαπημένου Going Merry."
+                ],
+                bg: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1000&q=80"
+            },
+            5: {
+                num: "ΣΕΖΟΝ 5",
+                title: "Η ΧΩΡΑ ΤΟΥ ΓΟΥΑΝΟ (WANO COUNTRY SAGA)",
+                episodes: "Επεισόδια 892 - 1085",
+                location: "Wano Country (Χώρα του Ουάνο)",
+                summary: "Το πλήρωμα επανενώνεται στην απομονωμένη χώρα των Σαμουράι, το Wano, η οποία βρίσκεται κάτω από την τυραννική κατοχή του Shogun Orochi και του Yonko Kaido (του ισχυρότερου πλάσματος στον κόσμο). Μαζί με τους Σαμουράι του Kozuki Oden, ο Luffy και οι σύμμαχοί του εξαπολύουν μια γιγαντιαία επίθεση στο νησί Onigashima για να απελευθερώσουν τη χώρα!",
+                highlights: [
+                    "• Το φανταστικό παραδοσιακό ιαπωνικό art style του Arc.",
+                    "• Η αποκάλυψη του θρυλικού Gear 5 και η μάχη με τον Kaido.",
+                    "• Η τραγική ιστορία του Kozuki Oden και η εκτέλεσή του.",
+                    "• Η ανάδειξη του Luffy ως ένας από τους νέους Τέσσερις Αυτοκράτορες (Yonko)."
+                ],
+                bg: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80"
+            }
+        };
+
+        let currentActiveSeason = 1;
+
+        function changeSeason(seasonNum) {
+            currentActiveSeason = seasonNum;
+            
+            // 1. Αλλαγή στυλ στα κουμπιά των Tabs
+            const buttons = document.querySelectorAll('.season-tab-btn');
+            buttons.forEach(btn => {
+                btn.className = "season-tab-btn bg-black text-white font-mangaTitle px-4 py-2 rounded border border-white shrink-0 hover:bg-opRed transition-all";
+            });
+
+            const activeBtn = document.getElementById('btn-s' + seasonNum);
+            if (activeBtn) {
+                activeBtn.className = "season-tab-btn bg-opGold text-black font-mangaTitle px-4 py-2 rounded manga-border shrink-0";
+            }
+
+            // 2. Ενημέρωση των στοιχείων της κάρτας με ομαλό εφέ (fade)
+            const card = document.getElementById('season-display-card');
+            card.style.opacity = '0.3';
+            card.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                const data = seasonsData[seasonNum];
+                document.getElementById('season-num').innerText = data.num;
+                document.getElementById('season-title').innerText = data.title;
+                document.getElementById('season-episodes').innerText = data.episodes;
+                document.getElementById('season-location').innerText = data.location;
+                document.getElementById('season-summary').innerText = data.summary;
+
+                // Highlights
+                const highlightsContainer = document.getElementById('season-highlights');
+                highlightsContainer.innerHTML = '';
+                data.highlights.forEach(hl => {
+                    const li = document.createElement('li');
+                    li.innerText = hl;
+                    highlightsContainer.appendChild(li);
+                });
+
+                // Update Backgrounds
+                const bgImg = document.getElementById('season-bg-img');
+                bgImg.style.backgroundImage = `url('${data.bg}')`;
+
+                // Update Body Background
+                updateSeasonBg();
+
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        function updateSeasonBg() {
+            const body = document.getElementById('main-body');
+            const data = seasonsData[currentActiveSeason];
+            if (data) {
+                body.style.backgroundImage = `url('${data.bg}')`;
+            }
+        }
+    </script>
+</body>
+</html>
+
+```
